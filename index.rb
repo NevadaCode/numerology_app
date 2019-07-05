@@ -6,6 +6,8 @@
 # 2. this method accepts the birthdate as an argument and determines the birth path number;
 # the birth path number is the return value
 
+require 'sinatra'
+
 def get_birth_path_num(birthdate)
     number = birthdate[0].to_i + birthdate[1].to_i + birthdate[2].to_i + birthdate[3].to_i + birthdate[4].to_i + birthdate[5].to_i + birthdate[6].to_i + birthdate[7].to_i
 
@@ -49,16 +51,14 @@ def get_message(birth_path_num)
     end
 end
 
-# 1. ask the user for their birthdate & assign response to variable
-puts "Please type in your birthdate in the following format: MMDDYYYY."
-birthdate = gets
+get '/:birthdate' do
+    birthdate = params[:birthdate]
+    birth_path_num = get_birth_path_num(birthdate)
+    message = get_message(birth_path_num)
+    "#{message}"
+end
 
-# 3. get birth path number using the method & assign to variable
-birth_path_num = get_birth_path_num(birthdate)
 
-#5. get the correct message using the method & assign to variable
-message = get_message(birth_path_num)
 
-#6. display the number and message to the user
-puts message
+
 
